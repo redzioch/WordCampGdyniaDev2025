@@ -1,0 +1,48 @@
+# General
+*.log
+*.cache
+*.tmp
+*.swp
+*.bak
+*.orig
+*.save
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Composer
+/vendor/
+/composer.lock
+
+# PHPStorm / IDEs
+.idea/
+/.vscode/
+/nbproject/
+/*.iml
+
+# Node.js (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# PHPUnit
+.phpunit.result.cache
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Build artifacts
+/build/
+/dist/
+/*.phar
+
+# Other
+*.sql
+*.sqlite
+*.sqlite3
