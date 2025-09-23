@@ -34,18 +34,18 @@ final class DocumentVectorStore
         $this->store = new RedisVectorStore($this->redis, $this->index);
     }
 
-    public function add(string $docId, string $text, array $metadata = []): void
+    public function add(string $docId, string $text): void
     {
-        $docs = [$this->makeDocument($docId, $text, $metadata)];
+        $docs = [$this->makeDocument($docId, $text)];
         $chunks = DocumentSplitter::splitDocuments($docs, $this->chunkSize, ".", $this->overlap);
         $embedded = $this->embedder->embedDocuments($chunks);
         $this->store->addDocuments($embedded);
     }
 
-    public function replace(string $docId, string $text, array $metadata = []): void
+    public function replace(string $docId, string $text): void
     {
         $this->delete($docId);
-        $this->add($docId, $text, $metadata);
+        $this->add($docId, $text);
     }
 
     public function delete(string $docId): int
@@ -65,7 +65,7 @@ final class DocumentVectorStore
     {
         $docs = [];
         foreach ($items as $it) {
-            $docs[] = $this->makeDocument($it['id'], $it['text'], $it['metadata'] ?? []);
+            $docs[] = $this->makeDocument($it['id'], $it['text']);
         }
         $chunks = DocumentSplitter::splitDocuments($docs, $this->chunkSize, ".", $this->overlap);
         $embedded = $this->embedder->embedDocuments($chunks);
@@ -80,22 +80,21 @@ final class DocumentVectorStore
         foreach ($hits as $hit) {
             /** @var Document $hit */
             $out[] = [
-                'similarity' => $hit->similarity ?? null,
-                'content'    => $hit->content,
-                'metadata'   => $hit->metadata ?? [],
+                'content' => $hit->content,
             ];
         }
         return $out;
     }
 
-    private function makeDocument(string $docId, string $text, array $metadata): Document
+    private function makeDocument(string $docId, string $text): Document
     {
         $d = new Document();
         $d->content = $text;
-        $d->metadata = array_merge($metadata, [
-            'doc_id' => $docId,
-            'source' => $metadata['source'] ?? 'inline',
-        ]);
+        $d->sourceType = 'manual';
+        $d->sourceName = $docId; // Use docId to make each document unique
+        $d->chunkNumber = 0;
+        $d->hash = '';
         return $d;
     }
+
 }
