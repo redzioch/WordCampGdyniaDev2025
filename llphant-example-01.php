@@ -4,6 +4,9 @@ require __DIR__ . '/vendor/autoload.php';
 use LLPhant\Chat\OpenAIChat;
 use LLPhant\OpenAIConfig;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $config = new OpenAIConfig();
 $chat = new OpenAIChat($config);
 
