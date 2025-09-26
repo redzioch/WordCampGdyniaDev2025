@@ -20,9 +20,6 @@ $dotenv->load();
 $redis = new PredisClient($_ENV['REDIS_URL']);
 $store = new \Dhosting\VectorStore\DocumentVectorStore($redis, $_ENV['REDIS_INDEX_NAME']);
 
-// $results = $store->search("How to install", 5);
-// print_r($results);
-
 $question = "How to add new post";
 
 $k = 10; // Reduce to 5 to make reranking more reliable
