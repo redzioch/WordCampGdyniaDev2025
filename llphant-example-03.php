@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Split text into chunks example
+ */
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Predis\Client as PredisClient;
@@ -38,7 +43,6 @@ $docs = [];
 foreach ($records as $r) {
     $d = new Document();
     $d->content  = $r['text'];
-    $d->metadata = ['doc_id' => $r['id'], 'source' => 'inline'];
     $docs[] = $d;
 }
 
@@ -48,7 +52,6 @@ foreach ($docs as $doc) {
     $splitDocs = DocumentSplitter::splitDocument($doc, $chunkSize, ' ', $overlap); // you can also split by sentece ('. ')
     foreach ($splitDocs as $i => $chunk) {
         // copy original metadata + add chunk index
-        $chunk->metadata = (isset($doc->metadata) ? $doc->metadata : []) + ['chunk_idx' => $i];
         $chunks[] = $chunk;
     }
 }

@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Basic LLM + LLPhant usage example
+ */
+
 require __DIR__ . '/vendor/autoload.php';
 
 use LLPhant\Chat\OpenAIChat;

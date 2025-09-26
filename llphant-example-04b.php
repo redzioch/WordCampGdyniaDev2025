@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Search vector store in Redis example
+ */
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Predis\Client as PredisClient;

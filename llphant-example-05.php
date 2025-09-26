@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Reranking search results with LLM example
+ */
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Predis\Client as PredisClient;
