@@ -33,7 +33,6 @@ $docs = [];
 foreach ($initial as $r) {
     $d = new Document();
     $d->content  = (string)($r['content'] ?? '');
-    // $d->metadata = $r['metadata'] ?? [];
     $docs[] = $d;
 }
 
